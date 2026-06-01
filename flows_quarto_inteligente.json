@@ -1,0 +1,867 @@
+[
+    {
+        "id": "ddb24761247cea9b",
+        "type": "tab",
+        "label": "Quarto Inteligente IoT",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9254d4197cbd0b7d",
+        "type": "ui_gauge",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "907cef2a9bd9621a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 770,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "d9ae7197dc167bb7",
+        "type": "mqtt in",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "topic": "quarto/sensores/dados",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "cddb1373abd48fcc",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "83f2bbc2b86f0fb7"
+            ]
+        ]
+    },
+    {
+        "id": "83f2bbc2b86f0fb7",
+        "type": "json",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "7163c6981bd30f06",
+                "c3d63237d9bd982e",
+                "ca6b912f14c831bb"
+            ]
+        ]
+    },
+    {
+        "id": "25526cab835201ad",
+        "type": "debug",
+        "z": "ddb24761247cea9b",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7163c6981bd30f06",
+        "type": "function",
+        "z": "ddb24761247cea9b",
+        "name": "Separar sensores",
+        "func": "var dados = msg.payload;\n\nif (typeof dados === \"string\") {\n    dados = JSON.parse(dados);\n}\n\nreturn [\n    { payload: Number(dados.temperatura) },\n    { payload: Number(dados.umidade) },\n    { payload: Number(dados.luminosidade) },\n    { payload: Number(dados.gas) },\n    { payload: Number(dados.movimento) },\n    { payload: dados.alerta }\n];",
+        "outputs": 6,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 380,
+        "wires": [
+            [
+                "9254d4197cbd0b7d"
+            ],
+            [
+                "ad70e89819950a97"
+            ],
+            [
+                "075854fe6cb66164"
+            ],
+            [
+                "0895c7dcb6fe48e0"
+            ],
+            [
+                "a27584576edf2816"
+            ],
+            [
+                "68432d9336980d86"
+            ]
+        ]
+    },
+    {
+        "id": "ad70e89819950a97",
+        "type": "ui_gauge",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "907cef2a9bd9621a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Umidade",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "075854fe6cb66164",
+        "type": "ui_gauge",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "907cef2a9bd9621a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Luminosidade",
+        "label": "ADC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4095",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 760,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0895c7dcb6fe48e0",
+        "type": "ui_gauge",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "907cef2a9bd9621a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gás",
+        "label": "ADC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4095",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 750,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "a27584576edf2816",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Movimento",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 770,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "68432d9336980d86",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alerta",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 750,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "58afdccc8e732a2f",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Luz ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/luz",
+        "topicType": "str",
+        "x": 120,
+        "y": 480,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "476feed9847e39ef",
+        "type": "mqtt out",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "cddb1373abd48fcc",
+        "x": 390,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "389180a5b8b1c242",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Luz OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/luz",
+        "topicType": "str",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "4ae6779ede87cc1c",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Tomada ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/tomada",
+        "topicType": "str",
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "c34dd418ce21bad8",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Tomada OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/tomada",
+        "topicType": "str",
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "a721e4c4e552bd74",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Ventilador ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/ventilador",
+        "topicType": "str",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "375b3f74f6f51719",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Ventilador OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/ventilador",
+        "topicType": "str",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "964daef1b72bb7b6",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Alarme ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/alarme",
+        "topicType": "str",
+        "x": 110,
+        "y": 600,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "b96f56f34d91d969",
+        "type": "ui_button",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "group": "ca4627df82561d5e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Alarme OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "quarto/atuadores/alarme",
+        "topicType": "str",
+        "x": 110,
+        "y": 660,
+        "wires": [
+            [
+                "476feed9847e39ef"
+            ]
+        ]
+    },
+    {
+        "id": "4a0dd0fdbe0e8cf9",
+        "type": "mqtt in",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "topic": "quarto/status/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "cddb1373abd48fcc",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 320,
+        "y": 620,
+        "wires": [
+            [
+                "d357de1bad8bb68b"
+            ]
+        ]
+    },
+    {
+        "id": "d357de1bad8bb68b",
+        "type": "function",
+        "z": "ddb24761247cea9b",
+        "name": "Separar status",
+        "func": "var valor = msg.payload;\nvar topico = msg.topic;\n\nif (topico === \"quarto/status/luz\") {\n    return [{ payload: valor }, null, null, null];\n}\n\nif (topico === \"quarto/status/tomada\") {\n    return [null, { payload: valor }, null, null];\n}\n\nif (topico === \"quarto/status/ventilador\") {\n    return [null, null, { payload: valor }, null];\n}\n\nif (topico === \"quarto/status/alarme\") {\n    return [null, null, null, { payload: valor }];\n}\n\nreturn null;",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 620,
+        "wires": [
+            [
+                "1ebd599236916cdc"
+            ],
+            [
+                "b8bc3ff1122261e1"
+            ],
+            [
+                "83d492f42c731e5c"
+            ],
+            [
+                "69c0ac16a7a3e08a"
+            ]
+        ]
+    },
+    {
+        "id": "1ebd599236916cdc",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status Luz",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 770,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "b8bc3ff1122261e1",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status Tomada",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 780,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "83d492f42c731e5c",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status Ventilador",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 790,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "69c0ac16a7a3e08a",
+        "type": "ui_text",
+        "z": "ddb24761247cea9b",
+        "group": "907cef2a9bd9621a",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status Alarme",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 780,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "c3d63237d9bd982e",
+        "type": "delay",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 40,
+        "wires": [
+            [
+                "722f1893a3e8be4f"
+            ]
+        ]
+    },
+    {
+        "id": "722f1893a3e8be4f",
+        "type": "change",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"Content-Type\":\"application/json\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 80,
+        "wires": [
+            [
+                "006298cf5d5fb368"
+            ]
+        ]
+    },
+    {
+        "id": "006298cf5d5fb368",
+        "type": "http request",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://script.google.com/macros/s/AKfycbyTJmhq0Vv5THl4B5NZgAxbx3bG6M2Uwwivp4NOphA0RSoes-icrhHOZ-uNES3cuTRp5A/exec",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 800,
+        "y": 40,
+        "wires": [
+            [
+                "25526cab835201ad"
+            ]
+        ]
+    },
+    {
+        "id": "968c10a6c14a0f6b",
+        "type": "e-mail",
+        "z": "ddb24761247cea9b",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "brunno.shiraishi@outlook.com",
+        "dname": "Enviar Alerta do Gmail",
+        "x": 1180,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ca6b912f14c831bb",
+        "type": "function",
+        "z": "ddb24761247cea9b",
+        "name": "Verificar alerta email",
+        "func": "var dados = msg.payload;\n\nif (typeof dados === \"string\") {\n    dados = JSON.parse(dados);\n}\n\nif (dados.alerta === \"NORMAL\") {\n    return null;\n}\n\nvar linkPlanilha = \"https://docs.google.com/spreadsheets/d/1UVSsKeT5dNlfdqR_TrT_8rpJjFUJTBToDHLP29w9DKs/edit?gid=0#gid=0\";\n\nvar movimentoTexto = Number(dados.movimento) === 1 ? \"Presenca detectada\" : \"Sem presenca\";\nvar nivelRisco = \"Atencao\";\n\nif (dados.alerta === \"GAS DETECT\") {\n    nivelRisco = \"Risco alto - verificar possivel gas ou fumaca\";\n} else if (dados.alerta === \"TEMP ALTA\") {\n    nivelRisco = \"Risco medio - temperatura elevada\";\n} else if (dados.alerta === \"MOVIMENTO\") {\n    nivelRisco = \"Atencao - movimento identificado\";\n} else if (dados.alerta === \"AMBIENTE ESCURO\") {\n    nivelRisco = \"Aviso - baixa luminosidade\";\n}\n\nmsg.topic = \"Notificacao IoT - Quarto Inteligente\";\n\nmsg.payload =\n    \"Sistema Quarto Inteligente IoT\\n\" +\n    \"Notificacao automatica de monitoramento residencial\\n\\n\" +\n\n    \"Resumo do alerta\\n\" +\n    \"--------------------------------\\n\" +\n    \"Tipo de alerta: \" + dados.alerta + \"\\n\" +\n    \"Classificacao: \" + nivelRisco + \"\\n\" +\n    \"Data e hora: \" + new Date().toLocaleString(\"pt-BR\") + \"\\n\\n\" +\n\n    \"Leituras registradas no momento do evento\\n\" +\n    \"--------------------------------\\n\" +\n    \"Temperatura: \" + dados.temperatura + \" C\\n\" +\n    \"Umidade: \" + dados.umidade + \" %\\n\" +\n    \"Luminosidade: \" + dados.luminosidade + \" ADC\\n\" +\n    \"Gas/Fumaca: \" + dados.gas + \" ADC\\n\" +\n    \"Sensor PIR: \" + movimentoTexto + \"\\n\\n\" +\n\n    \"Acoes disponiveis no sistema\\n\" +\n    \"--------------------------------\\n\" +\n    \"O dashboard Node-RED permite acionar individualmente luz, tomada, ventilador e alarme.\\n\" +\n    \"O ESP32 tambem registra os estados dos atuadores via MQTT em tempo real.\\n\\n\" +\n\n    \"Registro completo das leituras\\n\" +\n    \"--------------------------------\\n\" +\n    \"Planilha de monitoramento:\\n\" +\n    linkPlanilha + \"\\n\\n\" +\n\n    \"Mensagem gerada automaticamente pelo sistema de automacao residencial com ESP32, MQTT e Node-RED.\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 200,
+        "wires": [
+            [
+                "686e15698394b958"
+            ]
+        ]
+    },
+    {
+        "id": "686e15698394b958",
+        "type": "delay",
+        "z": "ddb24761247cea9b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 900,
+        "y": 180,
+        "wires": [
+            [
+                "968c10a6c14a0f6b"
+            ]
+        ]
+    },
+    {
+        "id": "cf40443d6c49e982",
+        "type": "inject",
+        "z": "ddb24761247cea9b",
+        "name": "Teste Email",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Teste - Quarto Inteligente IoT",
+        "payload": "Teste de email do Node-RED IoT",
+        "payloadType": "str",
+        "x": 1130,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "907cef2a9bd9621a",
+        "type": "ui_group",
+        "name": "Sensores",
+        "tab": "8700ce48843963dd",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cddb1373abd48fcc",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "51817863dc174a74b09c7b04b65dec4f.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ca4627df82561d5e",
+        "type": "ui_group",
+        "name": "Atuadores",
+        "tab": "8700ce48843963dd",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8700ce48843963dd",
+        "type": "ui_tab",
+        "name": "Quarto Inteligente IoT",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "eb032d69e5f5e249",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-email": "5.2.3"
+        }
+    }
+]

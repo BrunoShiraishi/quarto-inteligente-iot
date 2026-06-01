@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-breadboard-half",
+      "id": "bb1",
+      "top": 25.8,
+      "left": 108.4,
+      "attrs": { "color": "#eeefed" }
+    },
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 17.54,
+      "left": -53.9,
+      "rotate": 90,
+      "attrs": { "env": "micropython-20260406-v1.28.0" }
+    },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -114.9, "left": 359.4, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": -115.5,
+      "left": 234.5,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "pir1",
+      "top": 249.6,
+      "left": 357.98,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gas-sensor",
+      "id": "gas1",
+      "top": 286.6,
+      "left": 253.7,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": 79.94,
+      "left": 173.03,
+      "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -93.6,
+      "left": 222.6,
+      "attrs": { "volume": "0.1" }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": -127.6,
+      "left": 31.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay1",
+      "top": 313.4,
+      "left": 118,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay2",
+      "top": 294.2,
+      "left": 185.2,
+      "rotate": 90,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "bb1:bp.1", "red", [ "v0.15", "h28.8", "v135.3" ] ],
+    [ "esp:GND.2", "bb1:bn.1", "black", [ "v0" ] ],
+    [ "dht1:VCC", "bb1:tp.21", "red", [ "v0" ] ],
+    [ "esp:15", "dht1:SDA", "green", [ "v19.2", "h-38.4", "v-172.8", "h489.5" ] ],
+    [ "dht1:GND", "bb1:tn.21", "black", [ "v9.6", "h-38.4", "v38.4" ] ],
+    [ "ldr1:VCC", "bb1:tp.18", "red", [ "v0" ] ],
+    [ "ldr1:GND", "bb1:tn.18", "black", [ "v28.8", "h-18.8", "v28.8", "h28.8" ] ],
+    [ "esp:34", "ldr1:AO", "#8f4814", [ "v0" ] ],
+    [ "esp:27", "pir1:OUT", "gold", [ "v-19.05", "h-105.6", "v182.4", "h528", "v9.6" ] ],
+    [ "gas1:VCC", "bb1:bp.20", "red", [ "h27.9", "v-37.5" ] ],
+    [ "gas1:GND", "bb1:bn.20", "black", [ "v-19.2", "h28" ] ],
+    [ "esp:35", "gas1:AOUT", "green", [ "v-38.25", "h-144", "v220.8" ] ],
+    [ "oled1:VCC", "bb1:tp.6", "red", [ "v-28.8", "h-28.65", "v-19.2" ] ],
+    [ "oled1:GND", "bb1:tn.6", "black", [ "v-19.2", "h-9.6" ] ],
+    [ "esp:22", "oled1:SCL", "yellow", [ "v19.2", "h38.4", "v-134.4", "h134.4", "v9.6" ] ],
+    [ "esp:21", "oled1:SDA", "green", [ "v9.6", "h57.6", "v-115.2", "h153.6" ] ],
+    [ "esp:5", "bb1:18b.j", "green", [ "v19.2", "h307.2" ] ],
+    [ "bb1:18b.f", "bb1:18t.e", "green", [ "v0" ] ],
+    [ "bb1:18t.a", "bz1:2", "green", [ "v-19.2", "h9.6", "v-48", "h-48" ] ],
+    [ "bz1:1", "bb1:tn.11", "black", [ "v0" ] ],
+    [ "servo1:V+", "bb1:tp.8", "green", [ "h19.2", "v105.2" ] ],
+    [ "servo1:GND", "bb1:tn.9", "black", [ "h9.6", "v67.2", "h19.2" ] ],
+    [ "esp:18", "bb1:2b.j", "yellow", [ "v28.8", "h144" ] ],
+    [ "bb1:2b.f", "bb1:2t.e", "yellow", [ "v0" ] ],
+    [ "bb1:2t.a", "servo1:PWM", "yellow", [ "v-153.6", "h57.6" ] ],
+    [ "pir1:VCC", "bb1:bp.24", "red", [ "v-19.2", "h28.8", "v-28.8", "h-38.4" ] ],
+    [ "bb1:tp.25", "bb1:bp.25", "red", [ "v0.3", "h11.2", "v172.8" ] ],
+    [ "pir1:GND", "bb1:bn.24", "black", [ "v-19.2", "h9.86" ] ],
+    [ "bb1:tn.25", "bb1:bn.25", "black", [ "v-0.1", "h20.8", "v172.8", "h-19.2" ] ],
+    [ "oled1:GND", "bb1:9t.b", "", [ "$bb" ] ],
+    [ "oled1:VCC", "bb1:10t.b", "", [ "$bb" ] ],
+    [ "oled1:SCL", "bb1:11t.b", "", [ "$bb" ] ],
+    [ "oled1:SDA", "bb1:12t.b", "", [ "$bb" ] ],
+    [ "relay2:VCC", "bb1:bp.11", "red", [ "v-28.8", "h-9.6", "v-19.2" ] ],
+    [ "relay2:GND", "bb1:bn.11", "black", [ "v-28.8", "h10" ] ],
+    [ "esp:2", "relay2:IN", "yellow", [ "v96" ] ],
+    [ "relay1:VCC", "bb1:bp.6", "red", [ "v0" ] ],
+    [ "relay1:GND", "bb1:bn.6", "black", [ "v-9.6", "h19.6" ] ],
+    [ "esp:4", "relay1:IN", "green", [ "v115.2" ] ]
+  ],
+  "dependencies": {},
+  "features": {
+    "wifi": true
+  }
+}
